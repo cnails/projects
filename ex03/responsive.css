@@ -1,0 +1,154 @@
+html {
+    background-image: linear-gradient(to left, #3a7bd5, 20%, #4CA1AF);
+}
+img {
+    width: 100%;
+}
+
+h1 {
+    font-size: 4vw;
+}
+
+.title {
+    text-align: center;
+}
+.info_data {
+    min-width: 20vw;
+    text-align: center;
+    font-size: 2vw;
+}
+.descr {
+    font-style: italic;
+}
+.info {
+    display: flex;
+    font-size: 2vw;
+}
+.data_wiki {
+    margin: 2vw 5vw 0 5vw;
+    line-height: 3vw;
+}
+.hvr_read {
+    text-decoration: none;
+    padding-bottom: 4px;
+}
+.hvr_icon {
+    display: inline-block;
+    -webkit-transition-duration: 0.1s;
+    transition-duration: 0.1s;
+}
+.hvr_read:hover .hvr_icon{
+    -webkit-transform: translateX(8px);
+    transform: translateX(8px);
+}
+.table {
+    margin-left: 2vw;
+    margin-top: 7vw;
+}
+.row {
+    display: flex;
+}
+
+.row:first-child {
+    margin-top: 1vw;
+}
+
+.elem {
+    display: inline-block;
+    height: 5vw;
+    width: 5vw;
+    border: 0.1vw solid #000;
+}
+.elem_count {
+    padding-top: 2vw;
+    height: 5vw;
+    width: 5.2vw;
+    font-size: 2vw;
+    text-align: center;    
+}
+.col {
+    height: 5vw;
+}
+.elem_number {
+    margin-left: 0.2vw;
+    display: block;
+    float: left;
+    font-size: 1.2vw;
+}
+.elem_weight {
+    display: block;
+    float: right;
+    margin-right: 0.2vw;
+    font-size: 1.2vw;
+}
+.elem_name {
+    /* display: inline-block; */
+    text-transform: capitalize;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 1.5vw;
+    font-size: 1.2vw;
+}
+.elem_fullname {
+    text-align: center;
+    text-transform: capitalize;
+    width: 100%;
+    font-size: 1.2vw;
+}
+.non_metal {
+    background-color: yellow;
+}
+.metal {
+    background-color: grey;
+}
+.gase {
+    background-color: orange;
+}
+.alkali_metal {
+    background-color: brown;
+}
+.earth_metal {
+    background-color: #03d3fc;
+}
+.halogen {
+    background-color: #03fcdf;
+}
+.trans_metal {
+    background-color: green;
+}
+.big_table {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 5vw;
+    margin-right: 2vw;
+}
+.row_count {
+    margin-left: 2vw;
+    margin-top: 15vw;
+    height: 32vw;
+    font-size: 2vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.r_count {
+    text-align: center;
+    display: inline-block;
+}
+.colors {
+    /* width: 1400px; */
+    display: flex;
+    margin-bottom: 100px;
+    justify-content: space-around;
+}
+.color {
+    display: flex;
+    font-size: 2vw;
+}
+.box {
+    margin-right: 1vw;
+    /* margin-top: ; */
+    display: inline-block;
+    height: 2vw;
+    width: 2vw;
+}
