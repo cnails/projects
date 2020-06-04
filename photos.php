@@ -1,66 +1,42 @@
 #!/usr/bin/php
 <?php
+    function startsWith ($string, $startString) { 
+        $len = strlen($startString); 
+        return (substr($string, 0, $len) === $startString); 
+    } 
 
-    function getHtml($url){
-        $curl = curl_init($url);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        $html = curl_exec($curl);
-        curl_close($curl);
-        return ($html);
-    }
-
-    function getImgs($html, $url){
-        preg_match_all("/<img[^>]+src=([^\s>]+)/i", $html, $matches);
-        foreach ($matches[1] as $k => $v){
-            $matches[1][$k] = trim($v, "\"");
-            if (!preg_match("/^http(s?):\/\//", $matches[1][$k])){
-                if (preg_match("/^\//", $matches[1][$k])){
-                    preg_match("/^(http(s?):\/\/)([^\/]+)/", $url, $urlMatches);
-                    $matches[1][$k] = $urlMatches[1]."".$urlMatches[3]."".$matches[1][$k];
-                } else {
-                    $matches[1][$k] = $url."".$matches[1][$k];
-                }
-            }
-        }
-        return ($matches);
-    }
-
-    function createFolder($url){
-        $url = preg_replace("/^.*?:\/\//", '', $url);
-        if (file_exists($url) && is_dir($url))
-            return ($url);
-        mkdir($url);
-        return ($url);
-    }
-
-    function getName($img){
-        preg_match("/^.*?([^\/]+)$/", $img, $matches);
-        if (substr($matches[1], -1) === "\"" || substr($matches[1], -1) === "'")
-            return (substr($matches[1], 0, -1));
-        return ($matches[1]);
-    }
-
-    function downloadImg($imgs, $folder) {
-        foreach ($imgs[1] as $img) {
-            $curl = curl_init($img);
-            curl_setopt($curl, CURLOPT_HEADER, 0);
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($curl, CURLOPT_BINARYTRANSFER,1);
-            $raw = curl_exec($curl);
-            curl_close ($curl);
-            $fp = fopen($folder."/".getName($img),'w');
-            fwrite($fp, $raw);
-            fclose($fp);
+    function func ($str) {
+        global $url;
+        print_r($str);
+        $image = $str[1];
+        if (!startsWith($image, "https://") && !startsWith($image, "http://"))
+            $image = $url.$image;
+        $dirname = parse_url($url, PHP_URL_HOST);
+        if (!file_exists($dirname) && !is_dir($dirname))
+            mkdir($dirname);
+        $filename = explode("/", $image);
+        $filename = $filename[count($filename) - 1];
+        $filename = $dirname."/".$filename;
+        if (!is_file($filename)) {
+            $file = fopen($filename, "w");
+            $content = curl_init($image);
+            curl_setopt($content, CURLOPT_FILE, $file);
+            curl_exec($content);
+            curl_close($content);
+            fclose($file);
         }
     }
 
-    if ($argc < 1)
-        exit();
-
-    $html = getHtml($argv[1]);
-    if (!empty($html)){
-        $imgs = getImgs($html, $argv[1]);
-        $folder = createFolder($argv[1]);
-        downloadImg($imgs, $folder);
+    if ($argc == 2) {
+        $url = $argv[1];
+		$c = curl_init($url);
+        curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
+        $html = curl_exec($c);
+        if (curl_error($c)) {
+            echo "Wrong url!\n";
+            exit();
+        }
+        curl_close($c);
+        preg_replace_callback('/<img.*?src="(.*?)".*?>/', 'func', $html);
     }
 ?>
